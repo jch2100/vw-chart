@@ -25,7 +25,7 @@ CSV/XLSX 데이터를 붙여넣으면 **McKinsey·Economist·BCG 스타일의 �
 - **컨설팅·출판물 품질**: 결론형 제목(action title), 1색 강조 + 나머지 회색,
   직접 라벨링, 차트정크 제거, 출처 라인 — Tufte / *Storytelling with Data* /
   FT Visual Vocabulary 원칙을 기본값으로 내장.
-- **테마 4종**: `economist`(기본), `mckinsey`, `consulting`(BCG), `ft`.
+- **테마 4종**: `mckinsey`(기본), `economist`, `consulting`(BCG), `ft`.
   팔레트는 ggthemes/highcharter·bcggtheme·o-colors 등 인코딩된 출처에서 추출
   (출처는 `references/style-guide.md`).
 - **한글 100% 지원**: NanumGothic 폰트를 번들하고 SVG에 글자를 벡터 패스로

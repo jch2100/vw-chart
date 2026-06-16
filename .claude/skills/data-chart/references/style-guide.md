@@ -60,17 +60,17 @@ every tick. Use clean tick intervals (0, 50, 100…). Configure via
 Each theme defines: `primary` (default data color), `accent` (the one highlight),
 `muted` (context/gray), a `sequence` for multi-series, and backgrounds.
 
-### The Economist — `theme: economist` (default)
-Blues / grays / greens; **red rationed for emphasis**; bluish-gray panel.
-- primary `#014d64` · accent `#E3120B` (Economist Red) · muted `#adadad`
-- panel/background `#d5e4eb` · sequence: `#014d64, #6794a7, #01a2d9, #76c0c1, #00887d, #a18376`
-- Source: [highcharter `theme-economist.R`](https://github.com/jbkunst/highcharter/blob/main/R/theme-economist.R), [`ggthemes::economist_pal()`](https://jrnold.github.io/ggthemes/reference/economist_pal.html); red [shadcn.io Economist](https://www.shadcn.io/design/economist).
-
-### McKinsey — `theme: mckinsey`
+### McKinsey — `theme: mckinsey` (default)
 "Deep blue against white" with a bright electric-blue accent.
 - primary `#051C2C` (Black Pearl) · accent `#2251FF` (Blue Ribbon) · muted ≈ `#C0C5C9`
 - white canvas · cyan `#00A9F4` (approximate)
 - Source: [Brandfetch – mckinsey.com](https://brandfetch.com/mckinsey.com), [Slideworks – McKinsey identity](https://slideworks.io/resources/decoding-mckinseys-visual-identity-and-powerpoint-template), [Datawrapper style-guide notes](https://www.datawrapper.de/blog/colors-for-data-vis-style-guides). (McKinsey publishes no open palette package; cyan/gray are approximate.)
+
+### The Economist — `theme: economist`
+Blues / grays / greens; **red rationed for emphasis**; bluish-gray panel.
+- primary `#014d64` · accent `#E3120B` (Economist Red) · muted `#adadad`
+- panel/background `#d5e4eb` · sequence: `#014d64, #6794a7, #01a2d9, #76c0c1, #00887d, #a18376`
+- Source: [highcharter `theme-economist.R`](https://github.com/jbkunst/highcharter/blob/main/R/theme-economist.R), [`ggthemes::economist_pal()`](https://jrnold.github.io/ggthemes/reference/economist_pal.html); red [shadcn.io Economist](https://www.shadcn.io/design/economist).
 
 ### BCG / consulting — `theme: consulting`
 Distinctive green (vs competitors' navy); magenta/yellow accents.

@@ -94,8 +94,9 @@ Apply these unless the user says otherwise. Rationale + sources in
 - **Round numbers**, add thousands separators, put the unit in the subtitle —
   configure via `number_format`.
 - **Always add a `source:`** line; use `note:` for caveats.
-- **Default theme is `economist`.** Other themes: `consulting` (BCG green),
-  `mckinsey` (deep + electric blue), `ft` (salmon paper). Match the audience.
+- **Default theme is `mckinsey`** (deep + electric blue). Other themes:
+  `economist` (rationed red), `consulting` (BCG green), `ft` (salmon paper).
+  Match the audience.
 
 ## spec.yaml — minimal example
 ```yaml

@@ -101,7 +101,7 @@ THEMES = {
     ),
 }
 
-DEFAULT_THEME = "economist"
+DEFAULT_THEME = "mckinsey"
 
 
 def get(name: str | None) -> Theme:

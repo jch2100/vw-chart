@@ -8,7 +8,7 @@ a field here and re-run `render.py`** — never redraw from scratch.
 | field | type | applies to | description |
 |---|---|---|---|
 | `chart_type` | string | all | `bar`, `hbar`, `grouped_bar`, `stacked_bar`, `stacked_bar_100`, `line`, `waterfall`, `slope`, `dumbbell`, `scatter`, `pie`, `donut` |
-| `theme` | string | all | `economist` (default), `mckinsey`, `consulting`, `ft` |
+| `theme` | string | all | `mckinsey` (default), `economist`, `consulting`, `ft` |
 | `title` | string | all | The takeaway / action title (bold). |
 | `subtitle` | string | all | Context: metric, unit, period (lighter). |
 | `data` | map | all | Maps roles → CSV column names (see per-type below). |

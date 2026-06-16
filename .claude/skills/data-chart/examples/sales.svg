@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-06-16T01:18:56.695507</dc:date>
+    <dc:date>2026-06-16T01:29:26.316542</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -26,7 +26,7 @@ L 648 432
 L 648 0 
 L 0 0 
 z
-" style="fill: #d5e4eb"/>
+" style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
@@ -35,19 +35,19 @@ L 615.6 362.88
 L 615.6 86.4 
 L 168.48 86.4 
 z
-" style="fill: #d5e4eb"/>
+" style="fill: #ffffff"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
      <g id="line2d_1">
       <path d="M 168.48 362.88 
 L 168.48 86.4 
-" clip-path="url(#p34a6992ef7)" style="fill: none; stroke: #b7cdd9; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: none; stroke: #e6e8ea; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_2"/>
      <g id="text_1">
       <!-- 0 -->
-      <g style="fill: #5c5c5c" transform="translate(165.147344 375.796) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(165.147344 375.796) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-10" d="M 3066 2374 
 Q 3066 4384 1965 4384 
@@ -74,12 +74,12 @@ z
      <g id="line2d_3">
       <path d="M 251.304541 362.88 
 L 251.304541 86.4 
-" clip-path="url(#p34a6992ef7)" style="fill: none; stroke: #b7cdd9; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: none; stroke: #e6e8ea; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_4"/>
      <g id="text_2">
       <!-- 1000 -->
-      <g style="fill: #5c5c5c" transform="translate(237.973916 375.796) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(237.973916 375.796) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-11" d="M 2362 70 
 Q 2362 -19 2272 -19 
@@ -112,12 +112,12 @@ z
      <g id="line2d_5">
       <path d="M 334.129081 362.88 
 L 334.129081 86.4 
-" clip-path="url(#p34a6992ef7)" style="fill: none; stroke: #b7cdd9; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: none; stroke: #e6e8ea; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_6"/>
      <g id="text_3">
       <!-- 2000 -->
-      <g style="fill: #5c5c5c" transform="translate(320.798456 375.796) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(320.798456 375.796) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-12" d="M 576 -19 
 Q 506 -19 470 -16 
@@ -163,12 +163,12 @@ z
      <g id="line2d_7">
       <path d="M 416.953622 362.88 
 L 416.953622 86.4 
-" clip-path="url(#p34a6992ef7)" style="fill: none; stroke: #b7cdd9; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: none; stroke: #e6e8ea; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_8"/>
      <g id="text_4">
       <!-- 3000 -->
-      <g style="fill: #5c5c5c" transform="translate(403.622997 375.796) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(403.622997 375.796) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-13" d="M 493 90 
 Q 397 115 410 237 
@@ -225,12 +225,12 @@ z
      <g id="line2d_9">
       <path d="M 499.778162 362.88 
 L 499.778162 86.4 
-" clip-path="url(#p34a6992ef7)" style="fill: none; stroke: #b7cdd9; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: none; stroke: #e6e8ea; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_10"/>
      <g id="text_5">
       <!-- 4000 -->
-      <g style="fill: #5c5c5c" transform="translate(486.447537 375.796) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(486.447537 375.796) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-14" d="M 2509 1498 
 L 2509 4352 
@@ -276,12 +276,12 @@ z
      <g id="line2d_11">
       <path d="M 582.602703 362.88 
 L 582.602703 86.4 
-" clip-path="url(#p34a6992ef7)" style="fill: none; stroke: #b7cdd9; stroke-width: 0.8; stroke-linecap: square"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: none; stroke: #e6e8ea; stroke-width: 0.8; stroke-linecap: square"/>
      </g>
      <g id="line2d_12"/>
      <g id="text_6">
       <!-- 5000 -->
-      <g style="fill: #5c5c5c" transform="translate(569.272078 375.796) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(569.272078 375.796) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-15" d="M 736 77 
 Q 646 109 646 192 
@@ -329,7 +329,7 @@ z
      <g id="line2d_13"/>
      <g id="text_7">
       <!-- 중동·아프리카 -->
-      <g style="fill: #5c5c5c" transform="translate(99.75 337.686558) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(99.75 337.686558) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-86b" d="M 5728 2592 
 Q 5760 2592 5792 2569 
@@ -732,7 +732,7 @@ z
      <g id="line2d_14"/>
      <g id="text_8">
       <!-- 중남미 -->
-      <g style="fill: #5c5c5c" transform="translate(133.96 294.351135) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(133.96 294.351135) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-31a" d="M 1274 1101 
 Q 1274 1370 1376 1462 
@@ -859,7 +859,7 @@ z
      <g id="line2d_15"/>
      <g id="text_9">
       <!-- 아시아태평양 -->
-      <g style="fill: #5c5c5c" transform="translate(102.94 251.015712) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(102.94 251.015712) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-6d7" d="M 2406 4870 
 Q 2406 4448 2371 4061 
@@ -1178,7 +1178,7 @@ z
      <g id="line2d_16"/>
      <g id="text_10">
       <!-- 중국 -->
-      <g style="fill: #5c5c5c" transform="translate(144.3 207.680288) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(144.3 207.680288) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-265" d="M 4506 4608 
 Q 4506 4704 4474 4739 
@@ -1243,7 +1243,7 @@ z
      <g id="line2d_17"/>
      <g id="text_11">
       <!-- 유럽 -->
-      <g style="fill: #5c5c5c" transform="translate(144.3 164.344865) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(144.3 164.344865) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-7dd" d="M 2995 2669 
 Q 2669 2669 2307 2739 
@@ -1416,7 +1416,7 @@ z
      <g id="line2d_18"/>
      <g id="text_12">
       <!-- 북미 -->
-      <g style="fill: #5c5c5c" transform="translate(144.3 121.009442) scale(0.11 -0.11)">
+      <g style="fill: #6e7b85" transform="translate(144.3 121.009442) scale(0.11 -0.11)">
        <defs>
         <path id="NanumGothic-5c9" d="M 1600 3072 
 Q 1446 3072 1353 3091 
@@ -1500,7 +1500,7 @@ L 231.426651 350.312727
 L 231.426651 315.644389 
 L 168.48 315.644389 
 z
-" clip-path="url(#p34a6992ef7)" style="fill: #adadad"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: #c0c5c9"/>
    </g>
    <g id="patch_4">
     <path d="M 168.48 306.977304 
@@ -1508,7 +1508,7 @@ L 271.18243 306.977304
 L 271.18243 272.308966 
 L 168.48 272.308966 
 z
-" clip-path="url(#p34a6992ef7)" style="fill: #adadad"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: #c0c5c9"/>
    </g>
    <g id="patch_5">
     <path d="M 168.48 263.641881 
@@ -1516,7 +1516,7 @@ L 349.037499 263.641881
 L 349.037499 228.973542 
 L 168.48 228.973542 
 z
-" clip-path="url(#p34a6992ef7)" style="fill: #adadad"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: #c0c5c9"/>
    </g>
    <g id="patch_6">
     <path d="M 168.48 220.306458 
@@ -1524,7 +1524,7 @@ L 426.892567 220.306458
 L 426.892567 185.638119 
 L 168.48 185.638119 
 z
-" clip-path="url(#p34a6992ef7)" style="fill: #adadad"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: #c0c5c9"/>
    </g>
    <g id="patch_7">
     <path d="M 168.48 176.971034 
@@ -1532,7 +1532,7 @@ L 495.636935 176.971034
 L 495.636935 142.302696 
 L 168.48 142.302696 
 z
-" clip-path="url(#p34a6992ef7)" style="fill: #adadad"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: #c0c5c9"/>
    </g>
    <g id="patch_8">
     <path d="M 168.48 133.635611 
@@ -1540,21 +1540,21 @@ L 567.694286 133.635611
 L 567.694286 98.967273 
 L 168.48 98.967273 
 z
-" clip-path="url(#p34a6992ef7)" style="fill: #e3120b"/>
+" clip-path="url(#p3d9341f2f0)" style="fill: #2251ff"/>
    </g>
    <g id="patch_9">
     <path d="M 168.48 362.88 
 L 168.48 86.4 
-" style="fill: none; stroke: #5c5c5c; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #6e7b85; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_10">
     <path d="M 168.48 362.88 
 L 615.6 362.88 
-" style="fill: none; stroke: #5c5c5c; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #6e7b85; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_13">
     <!--   760 -->
-    <g style="fill: #1a1a1a" transform="translate(231.426651 336.538558) scale(0.1 -0.1)">
+    <g style="fill: #051c2c" transform="translate(231.426651 336.538558) scale(0.1 -0.1)">
      <defs>
       <path id="NanumGothic-33f0" transform="scale(0.015625)"/>
       <path id="NanumGothic-17" d="M 1549 70 
@@ -1619,7 +1619,7 @@ z
    </g>
    <g id="text_14">
     <!--   1,240 -->
-    <g style="fill: #1a1a1a" transform="translate(271.18243 293.198135) scale(0.1 -0.1)">
+    <g style="fill: #051c2c" transform="translate(271.18243 293.198135) scale(0.1 -0.1)">
      <defs>
       <path id="NanumGothic-c" d="M 1299 397 
 Q 1382 397 1382 368 
@@ -1647,7 +1647,7 @@ z
    </g>
    <g id="text_15">
     <!--   2,180 -->
-    <g style="fill: #1a1a1a" transform="translate(349.037499 249.862712) scale(0.1 -0.1)">
+    <g style="fill: #051c2c" transform="translate(349.037499 249.862712) scale(0.1 -0.1)">
      <defs>
       <path id="NanumGothic-18" d="M 2944 3642 
 Q 2944 4006 2624 4218 
@@ -1713,7 +1713,7 @@ z
    </g>
    <g id="text_16">
     <!--   3,120 -->
-    <g style="fill: #1a1a1a" transform="translate(426.892567 206.527288) scale(0.1 -0.1)">
+    <g style="fill: #051c2c" transform="translate(426.892567 206.527288) scale(0.1 -0.1)">
      <use xlink:href="#NanumGothic-33f0"/>
      <use xlink:href="#NanumGothic-33f0" transform="translate(28 0)"/>
      <use xlink:href="#NanumGothic-13" transform="translate(56 0)"/>
@@ -1725,7 +1725,7 @@ z
    </g>
    <g id="text_17">
     <!--   3,950 -->
-    <g style="fill: #1a1a1a" transform="translate(495.636935 163.191865) scale(0.1 -0.1)">
+    <g style="fill: #051c2c" transform="translate(495.636935 163.191865) scale(0.1 -0.1)">
      <defs>
       <path id="NanumGothic-19" d="M 2995 3206 
 Q 2995 3706 2726 4045 
@@ -1769,7 +1769,7 @@ z
    </g>
    <g id="text_18">
     <!--   4,820 -->
-    <g style="fill: #1a1a1a" transform="translate(567.694286 119.856442) scale(0.1 -0.1)">
+    <g style="fill: #051c2c" transform="translate(567.694286 119.856442) scale(0.1 -0.1)">
      <use xlink:href="#NanumGothic-33f0"/>
      <use xlink:href="#NanumGothic-33f0" transform="translate(28 0)"/>
      <use xlink:href="#NanumGothic-14" transform="translate(56 0)"/>
@@ -1780,22 +1780,9 @@ z
     </g>
    </g>
   </g>
-  <g id="patch_11">
-   <path d="M 38.88 13.392 
-L 68.04 13.392 
-L 68.04 8.208 
-L 38.88 8.208 
-z
-" style="fill: #e3120b; stroke: #e3120b; stroke-linejoin: miter"/>
-  </g>
-  <g id="line2d_19">
-   <path d="M 38.88 15.12 
-L 628.56 15.12 
-" style="fill: none; stroke: #e3120b; stroke-width: 1.4; stroke-linecap: square"/>
-  </g>
   <g id="text_19">
    <!-- 북미가 전체 매출 성장을 견인했다 -->
-   <g style="fill: #1a1a1a" transform="translate(38.88 50.416) scale(0.16 -0.16)">
+   <g style="fill: #051c2c" transform="translate(38.88 50.416) scale(0.16 -0.16)">
     <defs>
      <path id="NanumGothicBold-5c7" d="M 4960 -602 
 Q 4960 -634 4931 -662 
@@ -2848,7 +2835,7 @@ z
   </g>
   <g id="text_20">
    <!-- 2024년 지역별 매출 (단위: 백만 USD) -->
-   <g style="fill: #5c5c5c" transform="translate(38.88 69.032) scale(0.11 -0.11)">
+   <g style="fill: #6e7b85" transform="translate(38.88 69.032) scale(0.11 -0.11)">
     <defs>
      <path id="NanumGothic-34a" d="M 4710 4486 
 L 4710 5197 
@@ -3754,7 +3741,7 @@ z
   </g>
   <g id="text_21">
    <!-- 출처: 사내 ERP, 2024 -->
-   <g style="fill: #5c5c5c; opacity: 0.85" transform="translate(38.88 422.1275) scale(0.085 -0.085)">
+   <g style="fill: #6e7b85; opacity: 0.85" transform="translate(38.88 422.1275) scale(0.085 -0.085)">
     <defs>
      <path id="NanumGothic-8fb" d="M 3245 3494 
 Q 3021 2912 2611 2387 
@@ -4023,7 +4010,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p34a6992ef7">
+  <clipPath id="p3d9341f2f0">
    <rect x="168.48" y="86.4" width="447.12" height="276.48"/>
   </clipPath>
  </defs>
