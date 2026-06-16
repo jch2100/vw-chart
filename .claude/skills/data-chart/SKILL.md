@@ -94,6 +94,10 @@ Apply these unless the user says otherwise. Rationale + sources in
 - **Round numbers**, add thousands separators, put the unit in the subtitle —
   configure via `number_format`.
 - **Always add a `source:`** line; use `note:` for caveats.
+- **Call out the key insight with an annotation** (optional). Add an
+  `annotations:` entry to point an arrow + boxed note at the data point that
+  carries the message (supported on bar/hbar/line; see
+  [references/spec-schema.md](references/spec-schema.md)). Annotate the *why*.
 - **Default theme is `mckinsey`** (deep + electric blue). Other themes:
   `economist` (rationed red), `consulting` (BCG green), `ft` (salmon paper).
   Match the audience.

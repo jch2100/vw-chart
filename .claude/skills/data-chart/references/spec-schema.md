@@ -19,6 +19,7 @@ a field here and re-run `render.py`** — never redraw from scratch.
 | `number_format` | map | all | `decimals`, `thousands` (bool), `scale` (divide by), `prefix`, `suffix`. |
 | `x_label` / `y_label` | string | most | Axis titles. |
 | `figsize` | [w, h] | all | Inches. Default `[9, 6]`. |
+| `annotations` | list | bar, hbar, line (+ any via `xy`) | Text callouts with a leader line pointing at a data point. See below. |
 | `source` | string | all | Shown bottom-left, prefixed automatically as given (write "출처: …"). |
 | `note` | string | all | Caveat line, shown as "Note: …" above the source. |
 | `output` | map | all | `{ svg: true, png: false }`. `--png` flag also forces PNG. |
@@ -84,6 +85,40 @@ subtitle: "분기별 매출 점유율 (%)"
 data: { category: quarter, values: [제품A, 제품B, 제품C] }
 value_labels: true
 ```
+
+## Annotations (text callouts)
+
+Add short notes that point at a specific data point with a leader line. Each
+item in the `annotations` list supports:
+
+| field | description |
+|---|---|
+| `text` | callout text; use `\n` for line breaks |
+| `at` | anchor: category name (bar/hbar) or x value (line) |
+| `series` | line charts only: which line to anchor to (combine with `at`) |
+| `xy` | `[x, y]` explicit data coords — fallback for any chart type |
+| `dx`, `dy` | text-box offset from the point, in points (default `36`, `28`) |
+| `ha`, `va` | text alignment; inferred from offset sign if omitted |
+| `color` | box/arrow color (default = theme accent) |
+| `fontsize` | default `10` |
+
+```yaml
+annotations:
+  # bar/hbar: anchor by category
+  - text: "티구안 단독 선두\n2위와 740대 차이"
+    at: "티구안"
+    dx: -40
+    dy: -75
+    ha: right
+  # line: anchor by series + x value
+  - text: "경기 연말 최고치\n2월 대비 +93%"
+    series: "경기"
+    at: "12월"
+    dx: -150
+    dy: 18
+```
+Annotate the *why* (not the value), keep it brief, and tie the color to the
+series it refers to. If a box gets clipped at an edge, nudge `dx`/`dy`/`ha`.
 
 ## Common edits (recipes)
 - Change which item is emphasized → edit `highlight`.

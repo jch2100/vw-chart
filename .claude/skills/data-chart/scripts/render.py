@@ -103,6 +103,8 @@ def chart_bar(ax, df, spec, theme, horizontal=False):
     if horizontal:
         cats, vals, colors = cats[::-1], vals[::-1], colors[::-1]  # top = first
         ax.barh(cats, vals, color=colors)
+        # Anchor each bar at its end (value, row) for annotations.
+        ax._anchors = {str(c): (v, i) for i, (c, v) in enumerate(zip(cats, vals))}
         ax.grid(axis="x"); ax.grid(axis="y", visible=False)
         if spec.get("value_labels", True):
             for y, v in enumerate(vals):
@@ -111,6 +113,7 @@ def chart_bar(ax, df, spec, theme, horizontal=False):
         ax.margins(x=0.12)
     else:
         ax.bar(cats, vals, color=colors)
+        ax._anchors = {str(c): (i, v) for i, (c, v) in enumerate(zip(cats, vals))}
         if spec.get("value_labels", True):
             for x, v in enumerate(vals):
                 ax.text(x, v, fmt_number(v, nf), va="bottom", ha="center",
@@ -174,6 +177,13 @@ def chart_line(ax, df, spec, theme):
     series = resolve(d, df, "values") or [resolve(d, df, "value")]
     xs = df[x].astype(str).tolist()
     highlight = set(spec.get("highlight") or [])
+    anchors = {}
+    for s in series:
+        ys = df[s].tolist()
+        for i, xv in enumerate(xs):
+            anchors[f"{s}@{xv}"] = (i, ys[i])
+        anchors[str(s)] = (len(xs) - 1, ys[-1])  # series name -> last point
+    ax._anchors = anchors
     for i, s in enumerate(series):
         if highlight:
             color = theme.accent if s in highlight else theme.muted
@@ -338,6 +348,53 @@ def _maybe_legend(ax, spec, theme):
         ax.legend(frameon=False, loc="best")
 
 
+def draw_annotations(ax, spec, theme):
+    """Draw text callouts with a leader line pointing at a data point.
+
+    Each item in spec['annotations'] anchors to a data point and places a small
+    boxed note offset from it. Anchor a point by `at` (category name, or x value
+    for line charts — add `series` to pick the line), or give explicit data
+    coordinates with `xy: [x, y]`. Offsets `dx`/`dy` are in points.
+    """
+    anns = spec.get("annotations") or []
+    if not anns:
+        return
+    anchors = getattr(ax, "_anchors", {})
+    for ann in anns:
+        text = ann.get("text", "")
+        if not text:
+            continue
+        if "xy" in ann:
+            xy = tuple(ann["xy"])
+        else:
+            if ann.get("series") and ann.get("at") is not None:
+                key = f"{ann['series']}@{ann['at']}"
+            elif ann.get("at") is not None:
+                key = str(ann["at"])
+            else:
+                key = str(ann.get("series", ""))
+            if key not in anchors:
+                print(f"[render] WARNING: annotation anchor '{key}' not found; "
+                      f"use `xy: [x, y]` or a valid `at`/`series`. Skipping.",
+                      file=sys.stderr)
+                continue
+            xy = anchors[key]
+        dx = ann.get("dx", 36)
+        dy = ann.get("dy", 28)
+        color = ann.get("color", theme.accent)
+        ha = ann.get("ha", "left" if dx >= 0 else "right")
+        va = ann.get("va", "bottom" if dy >= 0 else "top")
+        ax.annotate(
+            text, xy=xy, xytext=(dx, dy), textcoords="offset points",
+            fontsize=ann.get("fontsize", 10), color=color, fontweight="bold",
+            ha=ha, va=va, zorder=10,
+            bbox=dict(boxstyle="round,pad=0.45", fc="white", ec=color,
+                      lw=1.1, alpha=0.96),
+            arrowprops=dict(arrowstyle="->", color=color, lw=1.3,
+                            connectionstyle="arc3,rad=0.15"),
+        )
+
+
 def finalize(fig, ax, spec, theme):
     """Add action title, subtitle, source/note, and the Economist tab."""
     left = 0.06
@@ -397,6 +454,7 @@ def render(data_path, spec_path, out_path, png=False):
     figsize = spec.get("figsize", [9, 6])
     fig, ax = plt.subplots(figsize=figsize)
     DISPATCH[chart_type](ax, df, spec, theme)
+    draw_annotations(ax, spec, theme)
 
     if spec.get("y_label") and chart_type not in ("scatter", "slope", "pie", "donut"):
         ax.set_ylabel(spec["y_label"])
