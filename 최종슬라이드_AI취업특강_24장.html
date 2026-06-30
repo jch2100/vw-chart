@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI와 함께 일하라 — AI를 활용한 취업 준비 노하우</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<style>
+  :root{
+    --bg:#ffffff; --paper:#f7f8fa; --ink:#0f1722; --ink2:#3b4656; --mut:#73808f;
+    --line:#e3e7ec; --line2:#cfd6de;
+    --accent:#1453d8; --accent-soft:#e8efff;
+    --green:#0c8a5b; --green-soft:#e3f6ec;
+    --amber:#b4690e; --amber-soft:#fcf0dd;
+    --iqvia:#1453d8; --sk:#d8431c; --dw:#0c8a5b;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased; overflow:hidden;
+  }
+  .stage{height:100vh; display:flex; align-items:center; justify-content:center; padding:5vh 5vw;}
+  .slide{display:none; width:100%; max-width:1060px; background:var(--bg); border:1px solid var(--line);
+    border-radius:18px; padding:52px 60px; min-height:74vh; box-shadow:0 18px 50px -28px rgba(15,23,34,.25);
+    animation:fade .3s ease; position:relative;}
+  .slide.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:22px;}
+  .eyebrow .idx{background:var(--accent); color:#fff; border-radius:5px; padding:2px 8px; font-size:12px; letter-spacing:.05em;}
+  h1{font-size:50px; line-height:1.14; font-weight:800; letter-spacing:-1.1px;}
+  h2{font-size:34px; line-height:1.22; font-weight:800; letter-spacing:-.7px;}
+  h3{font-size:21px; font-weight:800; letter-spacing:-.3px;}
+  .lead{color:var(--ink2); font-size:19px; line-height:1.6; margin-top:18px; max-width:46ch;}
+  .accent{color:var(--accent);} .gn{color:var(--green);} .am{color:var(--amber);}
+  .hr{height:1px; background:var(--line); margin:26px 0;}
+  .small{font-size:14px; color:var(--mut); line-height:1.5;}
+
+  /* generic cards */
+  .grid{display:grid; gap:16px; margin-top:28px;}
+  .g3{grid-template-columns:repeat(3,1fr);} .g2{grid-template-columns:repeat(2,1fr);}
+  .card{border:1px solid var(--line); border-radius:13px; padding:22px 24px; background:var(--bg);}
+  .card .k{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--mut); margin-bottom:9px;}
+  .card p{font-size:16px; line-height:1.55; color:var(--ink2);}
+  .card .big{font-size:30px; font-weight:800; color:var(--ink); letter-spacing:-.5px;}
+
+  .pill{display:inline-block; border:1px solid var(--line2); border-radius:999px; padding:6px 13px; font-size:13.5px;
+    font-weight:600; color:var(--ink2); margin:6px 7px 0 0; background:var(--paper);}
+  .pill.b{border-color:var(--accent); color:var(--accent); background:var(--accent-soft);}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; margin-top:24px; font-size:15.5px;}
+  th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.5;}
+  thead th{font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); font-weight:700; border-bottom:2px solid var(--line2);}
+  tbody td:first-child{font-weight:700; color:var(--ink); white-space:nowrap;}
+  td b{color:var(--ink);}
+  .ok{color:var(--green); font-weight:800;} .warn{color:var(--amber); font-weight:800;}
+
+  /* dossier (company) */
+  .dossier{border:1px solid var(--line); border-left:6px solid var(--spine,var(--accent)); border-radius:13px; padding:0; overflow:hidden;}
+  .doss-head{padding:22px 26px 18px; border-bottom:1px solid var(--line); background:var(--paper);}
+  .doss-head .co{font-size:13px; font-weight:700; letter-spacing:.08em; color:var(--mut);}
+  .doss-head .bm{font-size:23px; font-weight:800; letter-spacing:-.4px; margin-top:6px; line-height:1.3;}
+  .doss-body{display:grid; grid-template-columns:1fr 1fr; gap:0;}
+  .doss-body .cell{padding:18px 26px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .doss-body .cell:nth-child(2n){border-right:none;}
+  .doss-body .cell .k{font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:8px;}
+  .doss-body .cell p{font-size:15px; line-height:1.55; color:var(--ink2);}
+  .doss-body .cell p b{color:var(--ink);}
+  .statline{display:flex; gap:30px; padding:16px 26px; background:var(--accent-soft);}
+  .statline .s .n{font-size:24px; font-weight:800; color:var(--accent); letter-spacing:-.5px;}
+  .statline .s .l{font-size:12.5px; color:var(--ink2); margin-top:2px;}
+
+  /* quote / prompt */
+  .prompt{background:#0f1722; color:#e7edf5; border-radius:12px; padding:20px 24px; font-size:16px; line-height:1.6;
+    margin-top:22px; font-family:"SF Mono",ui-monospace,Menlo,monospace;}
+  .prompt .c{color:#7fa8ff;}
+  .note{margin-top:22px; background:var(--amber-soft); border:1px solid #f0d49b; border-radius:11px; padding:15px 20px; font-size:15.5px; line-height:1.55; color:#5d3a05;}
+  .note b{color:#5d3a05;}
+  .good{margin-top:22px; background:var(--green-soft); border:1px solid #b6e6cd; border-radius:11px; padding:15px 20px; font-size:15.5px; line-height:1.55; color:#0a5638;}
+
+  .modes{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:26px;}
+  .mode{border:1px solid var(--line); border-radius:12px; padding:18px 20px;}
+  .mode .t{font-size:18px; font-weight:800;} .mode .t span{font-size:13px; color:var(--mut); font-weight:600; margin-left:8px;}
+  .mode .say{margin-top:8px; font-size:14.5px; color:var(--accent); font-weight:600;}
+
+  .steps{display:flex; gap:10px; margin-top:28px;}
+  .steps .st{flex:1; border:1px solid var(--line); border-radius:11px; padding:16px 12px; text-align:center;}
+  .steps .st .n{width:26px; height:26px; line-height:26px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:13px; margin:0 auto 9px;}
+  .steps .st .t{font-size:13.5px; color:var(--ink2); line-height:1.35; font-weight:600;}
+
+  .biglist{margin-top:26px;} .biglist .li{display:flex; gap:16px; padding:15px 0; border-bottom:1px solid var(--line);}
+  .biglist .li .nn{font-size:15px; font-weight:800; color:var(--accent); min-width:78px;}
+  .biglist .li .tt{font-size:17px; color:var(--ink2); line-height:1.5;} .biglist .li .tt b{color:var(--ink);}
+
+  .center{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height:60vh;}
+  .quote{font-size:36px; font-weight:800; letter-spacing:-.7px; line-height:1.3; max-width:20ch;}
+
+  .footer-tag{position:absolute; bottom:22px; left:60px; font-size:12px; color:var(--mut); letter-spacing:.03em;}
+
+  /* padlet Q&A */
+  .padlet{display:flex; align-items:center; gap:20px; margin-top:26px; border:1px solid var(--line2); border-radius:13px; padding:16px 22px; background:var(--paper);}
+  .padlet .qr{width:96px; height:96px; flex:0 0 96px; background:#fff; border:1px solid var(--line); border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .padlet .qr img,.padlet .qr canvas{width:88px!important; height:88px!important;}
+  .padlet .qr .pend{font-size:11px; color:var(--mut); text-align:center; padding:6px; line-height:1.4;}
+  .padlet .txt .k{font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:6px;}
+  .padlet .txt .h{font-size:18px; font-weight:800; color:var(--ink);}
+  .padlet .txt a{font-size:14.5px; color:var(--accent); text-decoration:none; word-break:break-all;}
+  .padlet .txt .sub{font-size:13.5px; color:var(--mut); margin-top:4px;}
+
+  /* nav */
+  .bar{position:fixed; left:0; right:0; bottom:0; height:46px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 20px; background:rgba(255,255,255,.9); border-top:1px solid var(--line); backdrop-filter:blur(8px);}
+  .bar .ttl{font-size:12.5px; color:var(--mut);}
+  .bar .nav{display:flex; align-items:center; gap:12px;}
+  .bar button{background:var(--bg); border:1px solid var(--line2); color:var(--ink); width:34px; height:30px; border-radius:8px; font-size:15px; cursor:pointer;}
+  .bar button:hover{border-color:var(--accent); color:var(--accent);}
+  .count{font-size:13px; color:var(--ink2); min-width:52px; text-align:center; font-variant-numeric:tabular-nums;}
+  .prog{position:fixed; top:0; left:0; height:3px; background:var(--accent); z-index:20; transition:width .3s ease;}
+  .hint{position:fixed; bottom:54px; right:16px; font-size:11.5px; color:#9aa6b3;}
+  @media print{.bar,.hint,.prog{display:none;} .slide{display:block; page-break-after:always; box-shadow:none; min-height:auto;} body{overflow:visible;}}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="stage">
+
+<!-- 1 ───────────────────────────── -->
+<section class="slide active center">
+  <div class="eyebrow">한국바이오협회 × 고려대 × 서울대 공동 직무 설명회</div>
+  <h1>AI에게 <span class="accent">시키지</span> 마세요.<br>AI와 <span class="accent">함께</span> 일하세요.</h1>
+  <p class="lead" style="text-align:center; max-width:50ch;">AI를 활용한 취업 준비 노하우 — IQVIA · SK바이오팜 · 대웅제약을 AI와 함께 리서치한 전 과정과 결과</p>
+  <div style="margin-top:30px;" class="small">Career Bridge Program · 2026.07.03 · 강사 정찬훈</div>
+</section>
+
+<!-- 2 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">01</span> 오늘의 명제</div>
+  <h2>자판기 vs 파트너</h2>
+  <div class="grid g2">
+    <div class="card" style="border-color:var(--line2);">
+      <div class="k">대부분의 사용법 — 자판기</div>
+      <p style="font-size:18px;">"자소서 써줘." "이 회사 분석해줘."<br>→ 버튼 누르고, 나온 걸 받는다.<br><b>누구나 같은 캔이 나온다.</b></p>
+    </div>
+    <div class="card" style="border-color:var(--accent); background:var(--accent-soft);">
+      <div class="k" style="color:var(--accent);">잘 쓰는 법 — 파트너</div>
+      <p style="font-size:18px; color:var(--ink);">같이 <b>계획</b>하고, <b>되묻고</b>, <b>반박</b>받고, <b>검증</b>한다.<br>명령이 아니라 <b>대화</b>.</p>
+    </div>
+  </div>
+  <p class="lead">오늘 드릴 건 프롬프트 모음집이 아니라 <span class="accent">태도</span>입니다 — AI를 동료이자 멘토로 대하는 법.</p>
+  <div class="padlet">
+    <div class="qr" id="padletQR"><span class="pend">Padlet<br>QR<br>준비중</span></div>
+    <div class="txt">
+      <div class="k">질문은 여기로 · Q&amp;A Padlet</div>
+      <div class="h">궁금한 점은 강의 중 언제든 패들렛에 남겨주세요</div>
+      <a id="padletLink" href="#" target="_blank" rel="noopener">링크 추가 예정</a>
+      <div class="sub">QR 스캔 또는 링크 접속 → 익명으로 질문 등록</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">02</span> 오늘의 여정</div>
+  <h2>마인드셋 → 3사 라이브 리서치 → 나의 무기</h2>
+  <div class="steps">
+    <div class="st"><div class="n">A</div><div class="t">AI와 일하는<br>4가지 모드</div></div>
+    <div class="st"><div class="n">B</div><div class="t">3사 채용·BM<br>실제 리서치</div></div>
+    <div class="st"><div class="n">C</div><div class="t">DART·교차<br>검증</div></div>
+    <div class="st"><div class="n">D</div><div class="t">직무 진화<br>인사이트</div></div>
+    <div class="st"><div class="n">E</div><div class="t">역량을<br>KPI로</div></div>
+  </div>
+  <p class="lead">여러분이 지원할 회사로 <b>실제 시연</b>합니다. 결과뿐 아니라 "AI로 어떻게 뽑았는지"를 같이 봅니다.</p>
+</section>
+
+<!-- 4 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">03</span> 마인드셋 · 역설</div>
+  <h2>전문가가 AI를 <span class="accent">더</span> 잘 쓴다</h2>
+  <div class="grid g2">
+    <div class="card"><div class="k">흔한 오해</div><p style="font-size:17px;">"AI가 있으니 나는 몰라도 된다."</p></div>
+    <div class="card" style="border-color:var(--accent);"><div class="k" style="color:var(--accent);">진실</div><p style="font-size:17px; color:var(--ink);">AI는 그럴듯한 거짓말(할루시네이션)을 한다. <b>걸러내려면 내가 알아야</b> 한다.</p></div>
+  </div>
+  <div class="good">여러분이 <b>ADMET · RWE · P-CAB</b>이 뭔지 알면, AI가 헛소리할 때 즉시 잡는다. <b>바이오 전문성 = AI의 브레이크이자 액셀.</b></div>
+</section>
+
+<!-- 5 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">04</span> 마인드셋 · 4가지 모드</div>
+  <h2>AI를 4가지 관계로 번갈아 쓴다</h2>
+  <div class="modes">
+    <div class="mode"><div class="t">🤝 파트너 <span>일 시작할 때</span></div><div class="say">"먼저 나한테 질문해서 같이 계획 짜줘"</div></div>
+    <div class="mode"><div class="t">🧑‍🏫 멘토 <span>막힐 때</span></div><div class="say">"내가 놓친 관점이 뭐야? 반박해줘"</div></div>
+    <div class="mode"><div class="t">🔍 인턴 <span>수집·정리</span></div><div class="say">"이 3개 회사 공고를 표로 모아줘"</div></div>
+    <div class="mode"><div class="t">⚖️ 비평가 <span>마무리 검증</span></div><div class="say">"이 자소서 약점을 면접관 시각으로"</div></div>
+  </div>
+  <p class="lead">초보자가 가장 안 쓰는 건 <span class="accent">파트너 모드</span>. 오늘의 핵심입니다.</p>
+</section>
+
+<!-- 6 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">05</span> 파트너 모드 시연</div>
+  <h2>시키기 전에 — "먼저 질문해줘"</h2>
+  <div class="prompt">
+    나는 IQVIA Commercial Solutions에 지원하려는 바이오 전공자야.<br>
+    "그들이 하는 일에 내가 도움이 된다"를 증명하는 자소서·면접을 준비 중이야.<br>
+    <span class="c">바로 답하지 말고, 먼저 나에게 질문해서 리서치 계획부터 같이 짜줘.</span>
+  </div>
+  <div class="good">AI가 <b>답을 안 하고 되묻는다</b> — 목표·용도·정보원을 확인. 내가 승인하면 그때 시작. 이게 자판기와의 결정적 차이.</div>
+</section>
+
+<!-- 7 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">06</span> 함께 짠 계획</div>
+  <h2>AI가 제안하고, 내가 승인한 5단계</h2>
+  <div class="biglist">
+    <div class="li"><div class="nn">STEP 1</div><div class="tt"><b>채용공고 수집</b> — 신입/경력 구분, 동일직급 변화 추적</div></div>
+    <div class="li"><div class="nn">STEP 2</div><div class="tt"><b>BM 파악</b> — 직무소개·현직자 인터뷰·PR로 '돈 버는 구조' 캐기</div></div>
+    <div class="li"><div class="nn">STEP 3</div><div class="tt"><b>DART 정기공시</b> — 사업·재무로 숫자 검증</div></div>
+    <div class="li"><div class="nn">STEP 4</div><div class="tt"><b>유사기업 비교</b> — 공통점/차이점 도출</div></div>
+    <div class="li"><div class="nn">STEP 5</div><div class="tt"><b>종합</b> — 신입에게 요구하는 역량을 KPI로</div></div>
+  </div>
+</section>
+
+<!-- 8 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">07</span> STEP 1 · 수집 중 장애물</div>
+  <h2>막힘(403)을 만나면 우회로를 설계한다</h2>
+  <div class="grid g2">
+    <div class="card" style="border-color:var(--line2);"><div class="k am">막힌 길</div><p>잡코리아 · 사람인 · 캐치 · IQVIA.com<br><b class="am">→ 봇 차단(403)</b></p></div>
+    <div class="card" style="border-color:var(--green);"><div class="k gn">뚫은 길</div><p>검색 스니펫 · 언론 보도 · 협회 채용판<br><b class="gn">+ DART 공시</b></p></div>
+  </div>
+  <div class="good">자판기였으면 "못 찾았습니다"로 끝. <b>파트너는 길을 바꾼다</b> — 실패를 정보원 전략으로 전환.</div>
+</section>
+
+<!-- 9 ───────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">08</span> 리서치 결과 · 수집</div>
+  <h2>3사 채용공고 — 신입 / 경력</h2>
+  <table>
+    <thead><tr><th>회사·부서</th><th>신입 / 인턴</th><th>경력</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA<br>Commercial</td><td>Market Research Consultant — secondary research·시장분석·전문가 인터뷰·장표</td><td>IT Solutions·Analytics, Consultant (도메인+데이터)</td></tr>
+      <tr><td>SK바이오팜<br>AI Discovery</td><td>AI Data Scientist 인턴 — Python·SQL·통계 (우대 LLM·RAG)</td><td>AI Scientist — 석사·3년·딥러닝, 신약발굴 AI 솔루션</td></tr>
+      <tr><td>대웅제약<br>AI신약팀</td><td>채용연계형 인턴십 (사실상 신입 관문)</td><td>AI신약개발담당 — 화학정보학·모델링·RDKit</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:18px;">관찰: 세 곳 모두 인턴/신입은 <b>범용 스택</b>, 경력은 <b>신약발굴 도메인+딥러닝 응용</b>으로 격상. SK 인턴 우대에 LLM·RAG 신규 등장.</p>
+</section>
+
+<!-- 10 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">09</span> STEP 2 · 멘토 모드</div>
+  <h2>"뭘 팔아서 버는지(BM)"를 캐낸다</h2>
+  <div class="prompt">
+    이 회사가 <span class="c">'무엇을 팔아서 돈을 버는지(BM)'</span>를 현직자 인터뷰·뉴스룸·보도자료에서 찾아줘.<br>
+    그리고 <span class="c">이 부서가 그 돈 버는 구조의 어디에 기여하는지</span> 연결해줘.
+  </div>
+  <p class="lead">채용공고는 '무슨 일'만 알려준다. <b>왜 그게 회사에 돈이 되는지</b>를 알아야 "내가 도움이 된다"를 말할 수 있다.</p>
+  <div class="good">기업 <b>뉴스룸</b>이 보물 — 현직자가 직접 한 말은 자소서에 그대로 쓸 수 있는 1차 언어.</div>
+</section>
+
+<!-- 11 ──────────────────────────── IQVIA -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">10</span> 리서치 결과 ① IQVIA</div>
+  <div class="dossier" style="--spine:var(--iqvia);">
+    <div class="doss-head"><div class="co">IQVIA — Commercial Solutions</div>
+      <div class="bm">처방·판매 데이터로 제약사의 <span class="accent">상업화 의사결정</span>을 판다</div></div>
+    <div class="doss-body">
+      <div class="cell"><div class="k">돈 버는 구조</div><p>IMS Health(데이터)+Quintiles(CRO) 합병. 데이터·분석·컨설팅을 구독/프로젝트로 판매. <b>TAS</b> 부문.</p></div>
+      <div class="cell"><div class="k">이 부서가 하는 일</div><p><b>MIDAS</b>(90개국 시장측정) · Sales Force Effectiveness · Market Access(약가) · Brand Strategy</p></div>
+      <div class="cell"><div class="k">신입 진입 포인트</div><p>Market Research Consultant. <b>비즈니스 영어 필수</b>, 약학·생명 배경 우대, 약대 채용연계 인턴.</p></div>
+      <div class="cell"><div class="k">최근 변화</div><p>단순 분석 보조 → <b>AI 기반 전략·비정형 문제해결</b></p></div>
+    </div>
+    <div class="statline"><div class="s"><div class="n">1,271억</div><div class="l">한국 2024 매출</div></div><div class="s"><div class="n">90개국</div><div class="l">MIDAS 데이터 커버리지</div></div><div class="s"><div class="n">외국계</div><div class="l">글로벌 헬스케어 데이터</div></div></div>
+  </div>
+</section>
+
+<!-- 12 ──────────────────────────── SK -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">11</span> 리서치 결과 ② SK바이오팜</div>
+  <div class="dossier" style="--spine:var(--sk);">
+    <div class="doss-head"><div class="co">SK바이오팜 — AI Discovery팀</div>
+      <div class="bm">뇌전증 신약 <span style="color:var(--sk);">미국 직판</span>으로 벌어, AI로 다음 신약을 당긴다</div></div>
+    <div class="doss-body">
+      <div class="cell"><div class="k">돈 버는 구조</div><p>세노바메이트(엑스코프리) 미국 자체 직판. 2024 미국 매출 <b>4,387억(+66%)</b>.</p></div>
+      <div class="cell"><div class="k">이 부서가 하는 일</div><p>신약 후보물질 발굴·프로세스 최적화. CNS·RPT·TPD. <b>2026.6 인실리코와 ~4조 AIDD 협력</b>.</p></div>
+      <div class="cell"><div class="k">신입 진입 포인트</div><p>인턴 Python·SQL·통계 / 경력 AI Scientist 석사·3년·딥러닝. <b>Agentic AI·워크플로우 자동화</b>로 이동 중.</p></div>
+      <div class="cell"><div class="k">최근 변화</div><p>AI 모델링 → <b>"구성원이 AI 에이전트와 협업"</b> (2026 BIO USA 전략)</p></div>
+    </div>
+    <div class="statline"><div class="s"><div class="n">5,476억</div><div class="l">2024 매출 (첫 흑자)</div></div><div class="s"><div class="n">963억</div><div class="l">2024 영업이익</div></div><div class="s"><div class="n">~4조</div><div class="l">인실리코 협력 규모</div></div></div>
+  </div>
+</section>
+
+<!-- 13 ──────────────────────────── 대웅 -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">12</span> 리서치 결과 ③ 대웅제약</div>
+  <div class="dossier" style="--spine:var(--dw);">
+    <div class="doss-head"><div class="co">대웅제약 — AI신약팀</div>
+      <div class="bm">전통 제약 캐시플로 + <span style="color:var(--dw);">AI로 발굴 리드타임 압축</span></div></div>
+    <div class="doss-body">
+      <div class="cell"><div class="k">돈 버는 구조</div><p>3대 신약 펙수클루(P-CAB)·엔블로(SGLT2)·나보타(톡신). <b>2030 신약매출 1조</b> 목표.</p></div>
+      <div class="cell"><div class="k">이 부서가 하는 일</div><p><b>DAISY 웹플랫폼</b>(모든 연구원 사용) — DAVID 8억·DAIGEN(생성형)·DAI4ADME. 항암 선도물질 6개월.</p></div>
+      <div class="cell"><div class="k">신입 진입 포인트</div><p>석사+ CS·생명·통계·약학·의약화학. <b>ML/DM 논문 + Python·RDKit</b>. 인턴십이 관문.</p></div>
+      <div class="cell"><div class="k">핵심 관점</div><p>"모델 잘 짜는 사람"보다 <b>AI를 연구원 전체에 퍼뜨리는 사람</b></p></div>
+    </div>
+    <div class="statline"><div class="s"><div class="n">2021</div><div class="l">업계 최초 AI신약팀</div></div><div class="s"><div class="n">8억</div><div class="l">DAVID 가상 화합물</div></div><div class="s"><div class="n">6개월</div><div class="l">선도물질 확보 (기존 1~2년)</div></div></div>
+  </div>
+</section>
+
+<!-- 14 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">13</span> STEP 3 · 비평가 모드</div>
+  <h2>AI가 준 숫자는 <span class="accent">1차 출처</span>로 검증한다</h2>
+  <p class="lead">채용포털마다 IQVIA 직원수가 <b>650명 / 693명</b>으로 달랐다 → DART 전자공시로 확정.</p>
+  <table>
+    <thead><tr><th>회사</th><th>DART로 확정한 사실</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA(한국)</td><td>2024 매출 <b>1,271억</b> · 외국계 데이터·컨설팅·CRO</td></tr>
+      <tr><td>SK바이오팜</td><td>2024 매출 <b>5,476억</b> · 영업익 963억 (첫 흑자)</td></tr>
+      <tr><td>대웅제약</td><td>3대 신약 성장 · 2030 신약 <b>1조</b> 목표</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>"AI가 말한 숫자 = 사실"이 아니다.</b> 이걸 안 하면 면접에서 무너진다.</div>
+</section>
+
+<!-- 15 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">14</span> 한 단계 더 · 두 AI 교차검증</div>
+  <h2>마누스 × 클로드 — AI 둘을 붙인다</h2>
+  <table>
+    <thead><tr><th>마누스가 말한 것</th><th>검증</th><th>근거</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA 비즈니스 영어 필수</td><td><span class="ok">✅ 확인</span></td><td>Management Consulting 공고 명시</td></tr>
+      <tr><td>SK Agentic AI·자동화 전환</td><td><span class="ok">✅ 확인</span></td><td>2026 BIO USA "AI for Every Patient"</td></tr>
+      <tr><td>SK 인실리코 4조 협력</td><td><span class="ok">✅ 확인</span></td><td>2026.6 약 3.95조, AIDD</td></tr>
+      <tr><td>대웅 DAISY 전 연구원 사용</td><td><span class="ok">✅ 확인</span></td><td>AI신약팀장 인터뷰</td></tr>
+      <tr><td>KPI 수치 (정확도 80% 등)</td><td><span class="warn">⚠️ 예시값</span></td><td>공고 근거 없음 — AI 생성</td></tr>
+    </tbody>
+  </table>
+  <div class="good">두 AI가 같은 말 = <b>신뢰↑</b>. 한쪽만 한 말은 <b>1차 출처로 판정</b>. AI가 지어낸 숫자도 이렇게 걸러진다.</div>
+</section>
+
+<!-- 16 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">15</span> STEP 4 · 유사기업 비교</div>
+  <h2>경쟁사를 나란히 놓아야 표준이 보인다</h2>
+  <div class="grid g2">
+    <div class="card" style="border-color:var(--accent);"><div class="k" style="color:var(--accent);">AI 신약 — 공통 요건</div>
+      <p style="color:var(--ink);"><b>Python · RDKit</b>(화학정보학) · 딥러닝 · 화학/생명+전산 융합 · 최근 <b>LLM·생성형</b> 가산</p></div>
+    <div class="card"><div class="k">회사별 차이</div>
+      <p>바이오벤처(스탠다임·디어젠·인세리브로) = <b>모델 성능·논문</b><br>제약사(SK·대웅) = <b>자사 파이프라인 적용·리드타임 단축</b></p></div>
+  </div>
+  <p class="lead">한 회사만 보면 모른다. 3~5곳을 비교해야 "이 직무의 <span class="accent">진짜 표준 역량</span>"이 드러난다.</p>
+</section>
+
+<!-- 17 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">16</span> 빅 인사이트</div>
+  <h2>직무는 <span class="accent">진화</span>한다 — 세 회사가 한 방향</h2>
+  <table>
+    <thead><tr><th>회사</th><th>과거 (~2024)</th><th>현재 (2026)</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA</td><td>데이터 분석 보조</td><td><b>AI 기반 전략·비정형 문제해결</b></td></tr>
+      <tr><td>SK바이오팜</td><td>AI 모델링</td><td><b>Agentic AI·워크플로우 자동화</b></td></tr>
+      <tr><td>대웅제약</td><td>가상탐색·물성예측 모델</td><td><b>생성형 AI 설계 · 전 연구원 AI 협업</b></td></tr>
+    </tbody>
+  </table>
+  <div class="good">업계가 원하는 건 'AI를 <b>만드는</b> 사람'이 아니라 'AI와 <b>함께·팀에 퍼뜨려</b> 일하는 사람'. → 오늘 강의 메시지의 산 증거.</div>
+</section>
+
+<!-- 18 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">17</span> STEP 5 · 변환</div>
+  <h2>역량을 <span class="accent">KPI</span>로 바꾼다</h2>
+  <div class="grid g2" style="margin-top:24px;">
+    <div class="card" style="border-color:var(--line2);"><div class="k am">자소서가 죽는 말</div><p style="font-size:20px;">"열심히 하겠습니다."</p></div>
+    <div class="card" style="border-color:var(--green); background:var(--green-soft);"><div class="k gn">사는 말</div><p style="font-size:17px; color:var(--ink);">"Python으로 ADMET 예측 모델을 만들어 <b>RMSE 0.x 달성</b>, 대웅 DAI4ADME 같은 파이프라인에 적용 가능."</p></div>
+  </div>
+  <p class="lead">리서치는 수단, 목적은 <b>'나'를 그 회사 언어로 번역</b>하는 것 — 측정 가능한 증거로.</p>
+</section>
+
+<!-- 19 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">18</span> 리서치 결과 · 신입 KPI</div>
+  <h2>3사 신입이 준비할 KPI</h2>
+  <table>
+    <thead><tr><th>회사</th><th>핵심 역량</th><th>증명 KPI (산출물)</th></tr></thead>
+    <tbody>
+      <tr><td>IQVIA</td><td>비즈니스 영어 · 컨설팅 사고</td><td>공개데이터로 시장규모 추정 리포트 1건(가설→근거→결론) + 영문 작성</td></tr>
+      <tr><td>SK바이오팜</td><td>Python·PyTorch · Agentic AI</td><td>ML 모델 설계·평가 1건+(성능지표) · 멀티에이전트 분석 파이프라인 토이</td></tr>
+      <tr><td>대웅제약</td><td>화학정보학 · 융합 배경</td><td>RDKit 분자표현 산출물 + ADMET/생성모델 토이프로젝트</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:16px;">공통: 도메인 이해 · 데이터 리터러시 · 영어 · <b>AI를 동료처럼 써본 경험</b></p>
+</section>
+
+<!-- 20 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">19</span> 청중 실습 · 하이라이트</div>
+  <h2>지금, 본인 회사로 돌려보세요</h2>
+  <div class="prompt">
+    지금까지 리서치한 <span class="c">[회사/부서]</span>가 요구하는 역량을, 신입이 증명 가능한 <span class="c">KPI 형태</span>로 바꿔줘.<br>
+    그리고 내 경험 <span class="c">[내 프로젝트/논문/스킬]</span>을 그 KPI 언어로 <span class="c">자소서 한 단락</span>으로 써줘.<br>
+    단, 과장하지 말고 내가 실제로 한 것만.
+  </div>
+  <div class="good">폰으로 AI 열고 3분. 한 단락이 나옵니다 — <b>그게 오늘 가져가는 결과물.</b></div>
+</section>
+
+<!-- 21 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">20</span> 함께 일할 때 지킬 것</div>
+  <h2>AI를 믿되, 검증하라</h2>
+  <div class="biglist">
+    <div class="li"><div class="nn">원칙 1</div><div class="tt"><b>숫자·고유명사는 1차 출처로.</b> DART·공식 보도 — AI는 그럴듯하게 틀린다.</div></div>
+    <div class="li"><div class="nn">원칙 2</div><div class="tt"><b>개인·기밀 정보 입력 금지.</b> 회사 기밀, 남의 자소서 통째로 X.</div></div>
+    <div class="li"><div class="nn">원칙 3</div><div class="tt"><b>AI가 쓴 걸 내 말로 다시.</b> 면접관은 '내 언어'를 본다.</div></div>
+  </div>
+  <div class="note">오늘 리서치도 잡포털 차단으로 '3년치 전수'는 못 했다. <b>한계를 아는 게 잘 쓰는 것.</b></div>
+</section>
+
+<!-- 22 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">21</span> 요약 · AI 워크플로우</div>
+  <h2>오늘 AI가 보여준 일하는 방식</h2>
+  <div class="biglist">
+    <div class="li"><div class="nn">1 · 재정의</div><div class="tt">시키기 전에 요청을 되묻고 다시 적는다 (파트너)</div></div>
+    <div class="li"><div class="nn">2 · 분해</div><div class="tt">5단계로 쪼개 체크리스트로 추적</div></div>
+    <div class="li"><div class="nn">3 · 우회</div><div class="tt">막히면(403) 대체 정보원으로 돌아간다</div></div>
+    <div class="li"><div class="nn">4 · 교차검증</div><div class="tt">숫자는 DART·둘째 AI로 다시 확인 (비평가)</div></div>
+    <div class="li"><div class="nn">5 · 증거화</div><div class="tt">역량을 KPI로 변환</div></div>
+  </div>
+</section>
+
+<!-- 23 ──────────────────────────── -->
+<section class="slide center">
+  <div class="eyebrow" style="justify-content:center;">클로징</div>
+  <div class="quote">"그들이 하는 일을 알면,<br>내가 줄 <span class="accent">도움</span>을 말할 수 있다."</div>
+  <p class="lead" style="text-align:center; max-width:42ch; margin-top:24px;">시작은 <b>"먼저 질문해줘"</b>(파트너) · 막히면 <b>"내가 뭘 놓쳤어?"</b>(멘토) · 끝낼 땐 <b>"약점이 뭐야?"</b>(비평가)</p>
+  <p class="lead" style="text-align:center; margin-top:10px;">AI는 여러분을 대체하지 않는다. <span class="accent">증폭</span>한다.</p>
+</section>
+
+<!-- 24 ──────────────────────────── -->
+<section class="slide">
+  <div class="eyebrow"><span class="idx">23</span> 배포자료 · 오늘의 액션</div>
+  <h2>마스터 프롬프트 4종 — 집에서 그대로</h2>
+  <div class="biglist">
+    <div class="li"><div class="nn">계획</div><div class="tt">"바로 답하지 말고, 먼저 나에게 질문해서 리서치 계획을 같이 짜줘."</div></div>
+    <div class="li"><div class="nn">수집</div><div class="tt">"이 회사·부서 채용공고를 신입/경력으로 나눠 표로, 출처와 함께."</div></div>
+    <div class="li"><div class="nn">BM·검증</div><div class="tt">"뭘 팔아 버는지 BM을 찾고, 숫자는 DART 등 1차 출처로 검증해줘."</div></div>
+    <div class="li"><div class="nn">변환</div><div class="tt">"요구역량을 신입이 증명할 KPI로, 내 경험을 그 언어로 한 단락. 과장 없이."</div></div>
+  </div>
+  <div class="good" style="text-align:center;">오늘 하나만 — 지원할 회사 하나 정해서 <b>"먼저 나한테 질문해줘"</b>로 대화를 시작하세요.</div>
+  <div class="footer-tag">한국바이오협회 × 고려대 × 서울대 · Career Bridge Program · 2026.07.03</div>
+</section>
+
+</div>
+
+<div class="hint">← → / 스페이스 이동 · F 전체화면 · P 인쇄(PDF)</div>
+<div class="bar">
+  <div class="ttl">AI와 함께 일하라 — AI를 활용한 취업 준비 노하우</div>
+  <div class="nav">
+    <button onclick="go(-1)" aria-label="이전">‹</button>
+    <span class="count"><span id="cur">1</span> / <span id="tot">24</span></span>
+    <button onclick="go(1)" aria-label="다음">›</button>
+  </div>
+</div>
+
+<script>
+  /* ▼▼▼ Padlet 질문 링크: 아래 따옴표 안에 주소만 넣으면 QR·링크 자동 생성 ▼▼▼ */
+  const PADLET_URL = "";
+  /* ▲▲▲ 예: "https://padlet.com/ckohoon/qna" ▲▲▲ */
+  (function(){
+    const box=document.getElementById('padletQR'), link=document.getElementById('padletLink');
+    if(PADLET_URL && /^https?:\/\//.test(PADLET_URL)){
+      box.innerHTML='';
+      try{ new QRCode(box,{text:PADLET_URL,width:88,height:88,correctLevel:QRCode.CorrectLevel.M}); }
+      catch(e){ box.innerHTML='<span class="pend">QR 생성 실패<br>링크 참조</span>'; }
+      link.textContent=PADLET_URL; link.href=PADLET_URL;
+    }
+  })();
+
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0; const tot=slides.length;
+  document.getElementById('tot').textContent=tot;
+  function render(){
+    slides.forEach((s,n)=>s.classList.toggle('active',n===i));
+    document.getElementById('cur').textContent=i+1;
+    document.getElementById('prog').style.width=((i+1)/tot*100)+'%';
+    document.querySelector('.stage').scrollTop=0;
+  }
+  function go(d){ i=Math.max(0,Math.min(tot-1,i+d)); render(); }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1);}
+    if(e.key==='Home'){i=0;render();}
+    if(e.key==='End'){i=tot-1;render();}
+    if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement)document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+    if(e.key==='p'||e.key==='P'){ window.print(); }
+  });
+  render();
+</script>
+</body>
+</html>
