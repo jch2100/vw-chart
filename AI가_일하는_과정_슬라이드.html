@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI는 어떻게 일하는가 — 채용 리서치 실전 과정</title>
+<style>
+  :root{
+    --bg:#0d0f12; --panel:#16191e; --line:#262b33;
+    --txt:#e9edf2; --dim:#9aa4b2; --accent:#4da3ff; --accent2:#7ee787;
+    --warn:#ffb454; --chip:#1f242c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    overflow:hidden;
+  }
+  .stage{height:100vh; display:flex; align-items:center; justify-content:center; padding:4vh 5vw;}
+  .slide{display:none; width:100%; max-width:1000px; animation:fade .35s ease;}
+  .slide.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+
+  .kicker{color:var(--accent); font-size:15px; letter-spacing:.18em; font-weight:700; text-transform:uppercase; margin-bottom:18px;}
+  h1{font-size:46px; line-height:1.18; font-weight:800; letter-spacing:-.5px;}
+  h2{font-size:34px; line-height:1.25; font-weight:800; letter-spacing:-.4px; margin-bottom:6px;}
+  .sub{color:var(--dim); font-size:19px; margin-top:14px; line-height:1.5;}
+
+  .row{display:flex; gap:16px; margin-top:26px; flex-wrap:wrap;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 22px; flex:1; min-width:240px;}
+  .card .lab{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); font-weight:700; margin-bottom:10px;}
+  .card p{font-size:17px; line-height:1.55; color:var(--txt);}
+  .card .em{color:var(--accent2); font-weight:700;}
+
+  .think{background:linear-gradient(180deg,#161a20,#13161b); border-left:3px solid var(--accent); border-radius:10px; padding:18px 22px; margin-top:24px; font-size:19px; line-height:1.6;}
+  .think .who{color:var(--accent); font-size:13px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; display:block; margin-bottom:8px;}
+
+  .tool{display:inline-flex; align-items:center; gap:8px; background:var(--chip); border:1px solid var(--line); color:var(--dim); border-radius:999px; padding:7px 14px; font-size:14px; font-weight:600; margin:6px 8px 0 0;}
+  .tool b{color:var(--accent2); font-weight:700;}
+  .tools-wrap{margin-top:20px;}
+
+  ul.find{margin-top:18px; list-style:none;}
+  ul.find li{font-size:18px; line-height:1.6; padding:8px 0 8px 26px; position:relative; border-bottom:1px solid var(--line);}
+  ul.find li:before{content:"▸"; color:var(--accent); position:absolute; left:0; top:8px;}
+  ul.find li b{color:#fff;}
+
+  .lesson{margin-top:22px; background:rgba(255,180,84,.08); border:1px solid rgba(255,180,84,.3); border-radius:12px; padding:16px 20px; font-size:17px; line-height:1.55;}
+  .lesson .tag{color:var(--warn); font-weight:800; margin-right:8px;}
+
+  .big-num{font-size:80px; font-weight:800; color:var(--accent); line-height:1; margin-bottom:10px;}
+
+  /* footer / nav */
+  .bar{position:fixed; left:0; right:0; bottom:0; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 22px; background:rgba(13,15,18,.85); border-top:1px solid var(--line); backdrop-filter:blur(8px);}
+  .bar .title{font-size:13px; color:var(--dim); letter-spacing:.05em;}
+  .bar .nav{display:flex; align-items:center; gap:14px;}
+  .bar button{background:var(--chip); border:1px solid var(--line); color:var(--txt); width:38px; height:34px; border-radius:9px; font-size:16px; cursor:pointer;}
+  .bar button:hover{border-color:var(--accent);}
+  .count{font-size:14px; color:var(--dim); min-width:54px; text-align:center;}
+  .prog{position:fixed; top:0; left:0; height:3px; background:var(--accent); transition:width .3s ease; z-index:10;}
+  .hint{position:fixed; bottom:64px; right:18px; font-size:12px; color:#5b6470;}
+
+  .step-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:28px;}
+  .step-grid .s{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 12px; text-align:center;}
+  .step-grid .s .n{color:var(--accent); font-weight:800; font-size:20px;}
+  .step-grid .s .t{font-size:13px; color:var(--dim); margin-top:6px; line-height:1.35;}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="stage">
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="kicker">강의 부록 · Behind the Scenes</div>
+    <h1>AI는 어떻게 <span style="color:var(--accent)">채용 리서치</span>를 했나</h1>
+    <p class="sub">"AI를 활용한 취업 준비 노하우" — 실제로 AI가 IQVIA · SK바이오팜 · 대웅제약 3사를<br>리서치하며 거친 <b style="color:var(--txt)">사고 → 도구사용 → 발견 → 판단</b>의 전 과정을 슬라이드로 복기합니다.</p>
+    <div class="row">
+      <div class="card"><div class="lab">목표</div><p>"그들이 하는 일에 내가 도움이 된다"를 증명할 재료 찾기</p></div>
+      <div class="card"><div class="lab">방법</div><p>AI에게 <span class="em">계획부터</span> 시키고, 검색·교차검증·종합을 반복</p></div>
+      <div class="card"><div class="lab">교훈</div><p>AI는 빠르지만 <span class="em">의심하고 검증</span>하며 일한다</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker">STEP 0 · 요청 해석</div>
+    <h2>먼저 "무엇을 하라는 건지" 다시 정의한다</h2>
+    <div class="think"><span class="who">AI의 생각</span>
+      "요청을 정리하면, 세 기업 부서에 대해 <b>5단계 리서치 계획</b>을 실행하는 것이군요.
+      강의에서 'AI로 채용 리서치하는 법'을 시연하기 위한 <b>실제 콘텐츠</b>가 필요한 것으로 이해했습니다."</div>
+    <div class="lesson"><span class="tag">POINT</span> 좋은 AI 활용의 시작은 <b>요청을 되묻고 재진술</b>하는 것. 엉뚱한 답을 막는 첫 관문이다.</div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">STEP 0 · 도구 준비 & 솔직한 선언</div>
+    <h2>할 수 있는 것과 없는 것을 미리 깐다</h2>
+    <div class="tools-wrap">
+      <span class="tool"><b>ToolSearch</b> 웹 리서치 도구 장착</span>
+      <span class="tool"><b>WebSearch</b> 검색</span>
+      <span class="tool"><b>WebFetch</b> 페이지 수집</span>
+    </div>
+    <div class="think"><span class="who">AI의 생각</span>
+      "'3년치 채용공고 전수'는 공개 인덱싱이 안 된 부분이 많아, 찾을 수 있는 건 실증으로 채우고
+      <b>빈 곳은 명확히 표시</b>하겠습니다. 그게 오히려 강의에서 'AI 리서치의 한계와 보완법'으로 쓸 수 있는 좋은 소재입니다."</div>
+    <div class="lesson"><span class="tag">POINT</span> AI를 잘 쓰는 사람은 <b>한계를 먼저 인정</b>한다. "다 됩니다"가 아니라 "여기까지 됩니다"가 신뢰를 만든다.</div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker">STEP 1 · 병렬 수집</div>
+    <h2>3개 부서를 동시에 검색한다</h2>
+    <p class="sub">한 번에 하나씩이 아니라, 독립적인 작업은 <b style="color:var(--txt)">병렬로</b> 던진다 — 사람보다 빠른 지점.</p>
+    <div class="tools-wrap">
+      <span class="tool">🔍 IQVIA Commercial Solutions 채용</span>
+      <span class="tool">🔍 SK바이오팜 AI Discovery 채용</span>
+      <span class="tool">🔍 대웅제약 AI신약팀 채용</span>
+    </div>
+    <ul class="find">
+      <li><b>IQVIA</b> — 한국아이큐비아솔루션스, 시장조사·컨설팅 직무 다수</li>
+      <li><b>SK바이오팜</b> — AI Scientist(경력 3년+, 석사), AI Data Scientist 인턴</li>
+      <li><b>대웅제약</b> — AI신약개발담당 경력, 채용연계형 인턴십</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker">STEP 1 · 장애물 발생</div>
+    <h2>막힘(403)을 만나면, 우회로를 설계한다</h2>
+    <div class="think"><span class="who">AI의 판단</span>
+      "일부 채용 포털이 자동 접근을 차단(403)하네요 — <b>이것 자체가 강의에서 쓸 좋은 포인트</b>입니다.
+      잡포털은 봇 차단이 많아 <b>검색 스니펫·캐시·공식 IR 자료를 교차로</b> 써야 합니다. 다른 소스로 우회하겠습니다."</div>
+    <div class="row">
+      <div class="card"><div class="lab">막힌 길</div><p>잡코리아·사람인·캐치·IQVIA.com → <span style="color:var(--warn)">403 차단</span></p></div>
+      <div class="card"><div class="lab">뚫은 길</div><p>검색 스니펫 · 언론 보도 · 협회 채용판 · <span class="em">DART 공시</span></p></div>
+    </div>
+    <div class="lesson"><span class="tag">POINT</span> AI는 막히면 멈추지 않고 <b>대체 정보원으로 우회</b>한다. 실패를 데이터로 바꾸는 태도.</div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">STEP 1 · 체계화</div>
+    <h2>일을 쪼개 체크리스트로 관리한다</h2>
+    <div class="tools-wrap">
+      <span class="tool"><b>TaskCreate</b> 도구 7개 사용됨</span>
+    </div>
+    <div class="step-grid">
+      <div class="s"><div class="n">1</div><div class="t">채용공고 수집<br>(신입/경력)</div></div>
+      <div class="s"><div class="n">2</div><div class="t">직무·인터뷰<br>·BM 파악</div></div>
+      <div class="s"><div class="n">3</div><div class="t">DART<br>정기공시</div></div>
+      <div class="s"><div class="n">4</div><div class="t">유사기업<br>비교</div></div>
+      <div class="s"><div class="n">5</div><div class="t">신입역량<br>KPI화</div></div>
+    </div>
+    <div class="lesson"><span class="tag">POINT</span> 큰 과제일수록 <b>단계로 쪼개고 진행상태를 추적</b>한다. AI에게도, 사람에게도 같은 원칙.</div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker">STEP 2 · 깊이 파기</div>
+    <h2>"무엇을 파는 회사인가(BM)"를 캐낸다</h2>
+    <div class="think"><span class="who">AI의 생각</span>
+      "핵심 데이터가 쌓이고 있습니다. 이제 <b>현직자 인터뷰(대웅 AI신약팀 뉴스룸)</b>와 BM, DART를 파겠습니다."</div>
+    <ul class="find">
+      <li><b>IQVIA</b> — 데이터(MIDAS)로 제약사의 영업·약가·브랜드 의사결정을 파는 회사</li>
+      <li><b>SK바이오팜</b> — 뇌전증 신약 <b>직판</b>으로 벌어 AI로 다음 신약을 당긴다</li>
+      <li><b>대웅제약</b> — 자체 플랫폼 <b>DAISY</b>로 물질발굴~ADMET, 항암 선도물질 6개월 확보</li>
+    </ul>
+    <div class="lesson"><span class="tag">POINT</span> 기업 <b>뉴스룸·보도자료</b>는 현직자 인터뷰의 보고. 자소서에 그대로 인용 가능한 1차 언어가 거기 있다.</div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="kicker">STEP 3 · 교차검증</div>
+    <h2>AI가 준 숫자는 1차 출처로 검증한다</h2>
+    <p class="sub">채용포털마다 IQVIA 직원수가 650명/693명으로 달랐다 → <b style="color:var(--txt)">DART 공시로 확정</b>.</p>
+    <div class="row">
+      <div class="card"><div class="lab">IQVIA(한국)</div><p>2024 매출 <span class="em">1,271억</span><br>외국계, 데이터·컨설팅·CRO</p></div>
+      <div class="card"><div class="lab">SK바이오팜</div><p>2024 매출 <span class="em">5,476억</span><br>영업익 963억 (첫 흑자)</p></div>
+      <div class="card"><div class="lab">대웅제약</div><p>3대 신약 + <span class="em">2030 신약 1조</span> 목표</p></div>
+    </div>
+    <div class="lesson"><span class="tag">POINT</span> <b>"AI가 말한 숫자 = 사실"이 아니다.</b> DART·공식 IR로 한 번 더 확인하는 습관이 신뢰의 핵심.</div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="kicker">STEP 4 · 비교 분석</div>
+    <h2>경쟁사를 나란히 놓아 공통/차이를 본다</h2>
+    <div class="row">
+      <div class="card"><div class="lab">AI 신약 공통 요건</div>
+        <p><span class="em">Python · RDKit</span>(화학정보학) · 딥러닝 · 화학/생명+전산 융합 · 최근 <span class="em">LLM/생성형</span> 가산</p></div>
+      <div class="card"><div class="lab">차이</div>
+        <p>벤처=모델 성능·논문 / 제약사(SK·대웅)=<span class="em">자사 파이프라인 적용·리드타임 단축</span></p></div>
+    </div>
+    <div class="lesson"><span class="tag">POINT</span> 한 회사만 보면 모른다. <b>3~5개를 표로 비교</b>해야 "이 직무의 진짜 표준 역량"이 보인다.</div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="kicker">STEP 5 · 종합 산출</div>
+    <h2>역량을 막연함이 아니라 <span style="color:var(--accent)">KPI</span>로 바꾼다</h2>
+    <ul class="find">
+      <li><b>IQVIA</b> — 공개데이터로 시장규모 추정 리포트 1건(가설→근거→결론)</li>
+      <li><b>SK바이오팜</b> — ML 모델 설계·평가 프로젝트 1건+(성능지표 명시), Python·SQL</li>
+      <li><b>대웅제약</b> — RDKit로 분자표현 다룬 산출물 + ADMET/생성모델 토이프로젝트</li>
+    </ul>
+    <div class="lesson"><span class="tag">변환 공식</span> "열심히 하겠습니다" → <b>"Python으로 ADMET 예측 모델을 만들어 RMSE 0.x 달성"</b></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="kicker">정리 · AI 워크플로우의 5원칙</div>
+    <h2>오늘 AI가 보여준 일하는 방식</h2>
+    <div class="step-grid" style="grid-template-columns:repeat(1,1fr); gap:12px;">
+      <div class="s" style="text-align:left; padding:16px 20px;"><b style="color:var(--accent)">1. 재정의</b> <span style="color:var(--dim)">— 시키기 전에 요청을 되묻고 다시 적는다</span></div>
+      <div class="s" style="text-align:left; padding:16px 20px;"><b style="color:var(--accent)">2. 계획·분해</b> <span style="color:var(--dim)">— 5단계로 쪼개 체크리스트로 추적</span></div>
+      <div class="s" style="text-align:left; padding:16px 20px;"><b style="color:var(--accent)">3. 우회</b> <span style="color:var(--dim)">— 막히면(403) 대체 정보원으로 돌아간다</span></div>
+      <div class="s" style="text-align:left; padding:16px 20px;"><b style="color:var(--accent)">4. 교차검증</b> <span style="color:var(--dim)">— 숫자는 DART·공식 출처로 다시 확인</span></div>
+      <div class="s" style="text-align:left; padding:16px 20px;"><b style="color:var(--accent)">5. 종합·증거화</b> <span style="color:var(--dim)">— 역량을 KPI(측정가능한 증거)로 변환</span></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" style="text-align:center;">
+    <div class="big-num">→</div>
+    <h2 style="font-size:40px;">"그들이 하는 일을 알면,<br>내가 줄 도움을 말할 수 있다."</h2>
+    <p class="sub" style="font-size:20px;">채용은 회사의 문제에 대한 <b style="color:var(--accent2)">솔루션 제안</b>이다.<br>AI는 그 문제를 빠르게, 그러나 <b style="color:var(--txt)">의심하며</b> 찾아준다.</p>
+    <p class="sub" style="margin-top:30px; color:#5b6470; font-size:15px;">한국바이오협회 × 고려대 × 서울대 공동 직무 설명회 · Career Bridge Program</p>
+  </section>
+
+</div>
+
+<div class="hint">← → 또는 스페이스로 이동 · F 전체화면</div>
+<div class="bar">
+  <div class="title">AI는 어떻게 일하는가 — 채용 리서치 실전 복기</div>
+  <div class="nav">
+    <button onclick="go(-1)">‹</button>
+    <span class="count"><span id="cur">1</span> / <span id="tot">12</span></span>
+    <button onclick="go(1)">›</button>
+  </div>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0; const tot=slides.length;
+  document.getElementById('tot').textContent=tot;
+  function render(){
+    slides.forEach((s,n)=>s.classList.toggle('active',n===i));
+    document.getElementById('cur').textContent=i+1;
+    document.getElementById('prog').style.width=((i+1)/tot*100)+'%';
+  }
+  function go(d){ i=Math.max(0,Math.min(tot-1,i+d)); render(); }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1);}
+    if(e.key==='Home'){i=0;render();}
+    if(e.key==='End'){i=tot-1;render();}
+    if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement)document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  });
+  render();
+</script>
+</body>
+</html>
